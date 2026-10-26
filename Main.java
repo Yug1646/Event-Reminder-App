@@ -13,7 +13,6 @@ public class Main extends JFrame {
           private JTextField titleField, dateTimeField;
           private JTextArea descArea;
 
-          // Standard date and time format for text input fields
           private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
           public Main() {
@@ -44,13 +43,11 @@ public class Main extends JFrame {
 
                     add(formPanel, BorderLayout.NORTH);
 
-                    // 2. Upcoming Events List Panel (Center)
                     listModel = new DefaultListModel<>();
                     eventList = new JList<>(listModel);
                     eventList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     add(new JScrollPane(eventList), BorderLayout.CENTER);
 
-                    // 3. Button Panel (CRUD Actions)
                     JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
                     JButton addButton = new JButton("Add Event");
@@ -65,12 +62,8 @@ public class Main extends JFrame {
 
                     add(buttonPanel, BorderLayout.SOUTH);
 
-                    // --- Event Listeners ---
-
-                    // Show Events
                     showButton.addActionListener(e -> loadEvents());
 
-                    // Add Event
                     addButton.addActionListener(e -> {
                               String title = titleField.getText().trim();
                               String desc = descArea.getText().trim();
@@ -101,7 +94,6 @@ public class Main extends JFrame {
                               }
                     });
 
-                    // Update Event
                     updateButton.addActionListener(e -> {
                               EventOperations.Event selected = eventList.getSelectedValue();
                               if (selected == null) {
@@ -138,8 +130,6 @@ public class Main extends JFrame {
                                                             "Format Error", JOptionPane.ERROR_MESSAGE);
                               }
                     });
-
-                    // Delete Event
                     deleteButton.addActionListener(e -> {
                               EventOperations.Event selected = eventList.getSelectedValue();
                               if (selected == null) {
@@ -165,7 +155,6 @@ public class Main extends JFrame {
                               }
                     });
 
-                    // Populate form fields when an item in the list is clicked
                     eventList.addListSelectionListener(e -> {
                               EventOperations.Event selected = eventList.getSelectedValue();
                               if (selected != null) {
@@ -174,8 +163,6 @@ public class Main extends JFrame {
                                         dateTimeField.setText(selected.getDateTime().format(FORMATTER));
                               }
                     });
-
-                    // Load initial events on startup
                     loadEvents();
           }
 
